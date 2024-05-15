@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block title %}Property Registration{% endblock %}
+{% block content %}
+{% if user.is_authenticated %}
+
+<form action="{% url 'search_view' %}" method="get">
+    {% csrf_token %}
+    <label for="property_number">Enter Property Number </label>
+    <input type="text" id="property_number" name="propnumber">
+    <button type="submit">Search</button>
+
+
+</form>
+
+{% if property_form %}
+<form method="post" id="property_form" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="property_form">
+        {% for field in property_form %}
+        <div class="mydiv">
+            <label class="mylabel">{{ field.label }}</label>
+            {% if field.name == 'propnumber' %}
+            <input type="text" id="{{ field.id_for_label }}" name="{{ field.html_name }}" value="{{ field.value }}"
+                readonly>
+            {% else %}
+            {{ field }}
+            {% endif %}
+        </div>
+        <div class="error"><span class="{{field.name}}"></span></div>
+        {% endfor %}
+
+
+        <strong>{{ document }}</strong>
+        {% if saledeedpdf_files %}
+        <label class="mylabel">Saledeed</label>
+        {% for pdf_file in saledeedpdf_files %}
+        <li><a href="{% url 'download_file' pdf_file %}" target="_blank"   >{{ pdf_file }}</a></li>
+        {% endfor %}
+        {% endif %}
+
+        {% if pattapdf_files %}
+        <h3>Patta Documents:</h3>
+        <ul>
+            {% for file_name in pattapdf_files %}
+            <li><a href="{{ file_name }}">{{ file_name }}</a></li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        {% if taxpdf_files %}
+        <h3>Tax Payment Documents:</h3>
+        <ul>
+            {% for file_name in taxpdf_files %}
+            <li><a href="{{ file_name }}">{{ file_name }}</a></li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        {% if field_files %}
+        <h3>Field Measurement Documents:</h3>
+        <ul>
+            {% for file_name in field_files %}
+            <li><a href="{{ file_name }}">{{ file_name }}</a></li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+        {% if adangalpdf_files %}
+        <h3>Adangal Documents:</h3>
+        <ul>
+            {% for file_name in adangalpdf_files %}
+            <li><a href="{{ file_name }}">{{ file_name }}</a></li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+
+
+
+    </div>
+    <div class="buttons"> <button class="updatebtn" type="submit">Update</button>
+        <button class="cancel">Clear</button>
+    </div>
+</form>
+
+{% endif %}
+{% if message %}
+{{ message }}
+{% endif %}
+{% else %}
+<p>You are not logged in</p>
+<a href="{% url 'login' %}">Log In</a>
+
+{% endif %}
+{% endblock %}

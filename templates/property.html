@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Property Registration{% endblock %}
+{% block content %}
+{% if user.is_authenticated %}
+<div class="register">New Property Registration Form</div>
+<form method="post" id="property_form" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div class="property_form">
+    {% for field in property_form %}
+    <div class="mydiv">
+      <label class="mylabel">{{ field.label }}</label>
+      {{ field }}
+    </div>
+    <div class="error"><span class="{{field.name}}"></span></div>
+    {% endfor %}
+    {% for field in document_form %}
+    <div class="mydiv">
+      <label class="mylabel">{{ field.label }}</label>
+      {{ field }}
+    </div>
+    <div class="error"><span class="{{field.name}}"></span></div>
+    {% endfor %}
+  </div>
+  <div class="buttons"> <button class="registerbtn" type="submit">Register</button>
+    <button class="cancel">Clear</button>
+  </div>
+</form>
+<ul>
+</ul>
+{% else %}
+<p>You are not logged in</p>
+<a href="{% url 'login' %}">Log In</a>
+
+{% endif %}
+{% endblock %}

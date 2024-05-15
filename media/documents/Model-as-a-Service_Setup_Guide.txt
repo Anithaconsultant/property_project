@@ -1,0 +1,93 @@
+==================================================================================================
+Create An Awesome Streamlit App & Deploy it With Docker
+https://towardsdatascience.com/create-an-awesome-streamlit-app-deploy-it-with-docker-a3d202a636e8
+==================================================================================================
+
+Create Python Virtual Env
+-------------------------
+mkdir sentiment_analysis
+cd sentiment_analysis
+python -m venv spamenv
+spamenv\Scripts\activate
+
+Install the dependencies
+-------------------------
+pip install scikit-learn
+pip install pandas
+pip install streamlit
+pip install joblib
+
+Download the code repository from following GitHub link and extract it to a directory
+-------------------------------------------------------------------------------------
+https://github.com/keitazoumana/streamlit-spam-detector
+
+Create project structure similar to the cloned repository 
+---------------------------------------------------------
+Create directories - data, images, notebooks, models, packages, vectors etc 
+copy files from repository 
+
+Train and build the model
+-------------------------
+python train_model.py
+
+Launch the streamlit application
+--------------------------------
+streamlit run app.py
+
+Run the application
+-------------------
+http://localhost:8501/
+
+==================================================================================================
+Create A Falsk App 
+https://towardsdatascience.com/create-an-awesome-streamlit-app-deploy-it-with-docker-a3d202a636e8
+==================================================================================================
+
+Create Python Virtual Env
+-------------------------
+mkdir deploy_demo
+cd deploy_demo
+
+pip install virtualenv
+virtualenv lambda_env
+lambda_env\Scripts\activate
+
+Install the dependencies
+-------------------------
+pip install Flask scikit-learn boto numpy scipy
+
+Copy the model files from streamlit tutorial
+--------------------------------------------
+spam_detector_model.pkl
+vectorizer.pickle
+
+Copy Flask Application file
+---------------------------
+predictions2.py
+
+Run the Flask Application
+-------------------
+set FLASK_APP=predictions2.py
+Flask run
+
+Copy the payload file
+---------------------------
+payload.json
+
+Call the API using curl
+-----------------------
+curl -X POST -H "Content-Type: application/json" -d @payload.json http://127.0.0.1:5000/
+
+Test with Postman
+-----------------
+Download postman https://www.postman.com/downloads/
+Install postman 
+
+Put a request with POST method to http://127.0.0.1:5000/
+passing in following json payload 
+{"payload": "this is finishign email"}
+{"payload": "We’ve detected suspicious activity on your Google account. Follow this link to reset your password: [link]"}
+{"payload": "Your niece has been arrested and needs $7,500."}
+
+Inspect the results
+

@@ -1,0 +1,21 @@
+  {% if 'FileField' in field.__class__.__name__ %}
+                        {% if getattr(document, field.name) %}
+                            <li><a href="{{ getattr(document, field.name).url }}">{{ field.verbose_name }}</a></li>
+                        {% endif %}
+                    {% endif %}
+
+                    href="/media/documents/{{pdf_file}}"
+                    
+        {% if property_document_data.Saledeed %}
+        <label class="mylabel">Saledeed</label>
+        {% for pdf_file in saledeedpdf_files %}
+        <li><a href="{{ getattr(document, pdf_file).url }}">{{ pdf_file }}</a></li>
+        {% endfor %}
+
+        {% endif %}
+        {% if property_document_data.Patta %}
+        <label class="mylabel">Patta</label>
+        {% for pdf_file in pattapdf_files %}
+        <li><a href="{{ pdf_file }}">{{ pdf_file }}</a></li>
+        {% endfor %}
+        {% endif %}
